@@ -35,5 +35,6 @@ class EntraineurDAO(val bdd: BDD = db) {
         requetePreparer.close()
         return result
     }
+    //Page 16
 
 }
