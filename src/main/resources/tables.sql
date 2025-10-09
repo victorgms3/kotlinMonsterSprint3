@@ -41,7 +41,7 @@ CREATE TABLE Zone_EspeceMonstre(
 
 -- Creation de la table IndividuMonstre
 CREATE TABLE IndividuMonstre (
-        id INT PRIMARY KEY,
+        id INT PRIMARY KEY AUTO_INCREMENT,
         nom VARCHAR(255) NOT NULL,
         espece_id INT NOT NULL,
         entraineur_id INT NULL,
@@ -103,5 +103,15 @@ VALUES
      'Un petit rongeur jaune capable de générer de puissantes décharges électriques. Sa queue en forme d’éclair vibre quand il est excité.',
      'Il emmagasine de l’électricité dans ses joues. Peut libérer une attaque foudroyante en cas de danger.',
      'Énergique, loyal, espiègle.');
+
+--Individus :
+INSERT INTO IndividuMonstre (espece_id, nom, entraineur_id, expInit)
+VALUES
+    (1,'springleaf',2, 1.0),
+    (7, 'aquamy',1,1.0),
+    (10,'bugsyface',1,1.0),
+    (13,'galum',3,1.0),
+    (4,'flamkip',3,1.0);
+
 
 
