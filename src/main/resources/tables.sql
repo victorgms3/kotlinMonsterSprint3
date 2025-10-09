@@ -23,7 +23,7 @@ CREATE TABLE EspeceMonstre(
     modPv INTEGER,
     description VARCHAR(255),
     particularite VARCHAR(255),
-    caracteres VARCHAR(255);
+    caracteres VARCHAR(255));
 
 -- Creation de la table Zone
 CREATE TABLE Zone(
@@ -31,3 +31,20 @@ CREATE TABLE Zone(
     nom VARCHAR(255),
     expZone INTEGER);
 
+-- Creation de la table Zone_EspeceMonstre
+CREATE TABLE Zone_EspeceMonstre(
+    zone_id INTEGER,
+    espece_id INTEGER,
+    PRIMARY KEY (zone_id, espece_id),
+    FOREIGN KEY (zone_id) REFERENCES Zone(id),
+    FOREIGN KEY (espece_id) REFERENCES EspeceMonstre(id));
+
+-- Creation de la table IndividuMonstre
+CREATE TABLE IndividuMonstre (
+        id INT PRIMARY KEY,
+        nom VARCHAR(255) NOT NULL,
+        espece_id INT NOT NULL,
+        entraineur_id INT NULL,
+        expInit DOUBLE NOT NULL DEFAULT 0.0,
+        FOREIGN KEY (espece_id) REFERENCES EspeceMonstre(id),
+        FOREIGN KEY (entraineur_id) REFERENCES Entraineurs(id));
