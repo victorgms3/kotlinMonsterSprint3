@@ -12,7 +12,7 @@ class BDDTest {
         val bdd = BDD()
 
         // 2️⃣ Prépare une requête SQL pour récupérer toutes les lignes de la table "entraineurs"
-        val sql = bdd.connectionBDD!!.prepareStatement("SELECT * FROM entraineurs")
+        val sql = bdd.connectionBDD!!.prepareStatement("SELECT * FROM Entraineurs")
 
         // 3️⃣ Exécute la requête préparée via la méthode de la classe BDD
         val resultRequete = bdd.executePreparedStatement(sql)!!
