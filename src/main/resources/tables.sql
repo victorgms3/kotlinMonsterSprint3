@@ -1,8 +1,8 @@
 -- Creation de la table Entraineurs
 CREATE TABLE Entraineurs(
-                            id INTEGER PRIMARY KEY AUTO_INCREMENT,
-                            nom VARCHAR(255),
-                            argents INTEGER);
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(255),
+    argents INTEGER);
 
 -- Creation de la table EspeceMonstre
 CREATE TABLE EspeceMonstre(
@@ -48,3 +48,10 @@ CREATE TABLE IndividuMonstre (
         expInit DOUBLE NOT NULL DEFAULT 0.0,
         FOREIGN KEY (espece_id) REFERENCES EspeceMonstre(id),
         FOREIGN KEY (entraineur_id) REFERENCES Entraineurs(id));
+
+--Insertion de données :
+INSERT INTO Entraineurs (nom, argents)
+VALUES
+    ('Bob', 1),
+    ('Alice', 1),
+    ('Clara', 1);
