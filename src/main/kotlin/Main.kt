@@ -270,8 +270,6 @@ fun main() {
     initialiserRelationsElements()
     especeflamkip.palierTechnique.addAll(paliersFlamkip)
     especeflamkip.basePv = 500
-    val test = CombatMonstre(monstre2, monstre1)
-    //println(test.actionAdversaire())
     val testJouer = nouvellePartie()
     testJouer.choixStarter()
     testJouer.jouer()
