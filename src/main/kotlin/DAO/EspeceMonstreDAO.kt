@@ -2,7 +2,6 @@ package org.example.DAO
 
 import BDD
 import org.example.db
-import org.example.dresseur.Entraineur
 import org.example.monstre.EspeceMonstre
 import java.sql.PreparedStatement
 import java.sql.SQLException
