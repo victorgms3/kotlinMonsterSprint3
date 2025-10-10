@@ -274,4 +274,19 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
             false
         }
     }
+
+    /**
+     * Sauvegarde plusieurs espèces dans la base de données.
+     *
+     * @param espece Liste d'espèces à sauvegarder.
+     * @return Liste des espèces sauvegardées.
+     */
+    fun saveAll(espece: Collection<EspeceMonstre>): MutableList<EspeceMonstre> {
+        val result = mutableListOf<EspeceMonstre>()
+        for (e in espece) {
+            val sauvegarde = save(e)
+            if (sauvegarde != null) result.add(sauvegarde)
+        }
+        return result
+    }
 }
