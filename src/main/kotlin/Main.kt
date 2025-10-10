@@ -1,6 +1,7 @@
 package org.example
 
 import BDD
+import EntraineurDAO
 import org.example.item.Badge
 import org.example.dresseur.Entraineur
 import org.example.item.CapsuleTechnique
@@ -16,6 +17,13 @@ import org.example.monstre.Element
 import org.example.monstre.IndividuMonstre
 
 val db = BDD()
+//Les DAO
+val entraineurDAO= EntraineurDAO(db)
+
+//Les listes
+val listeEntraineur = entraineurDAO.findAll()
+
+
 //Declaration des Entraineurs
 var joueur = Entraineur(1, "Sacha", 10, mutableListOf(), mutableListOf(), mutableListOf())
 var rival = Entraineur(2, "rival", 10, mutableListOf(), mutableListOf(), mutableListOf())
