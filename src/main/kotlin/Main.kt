@@ -2,6 +2,7 @@ package org.example
 
 import BDD
 import EntraineurDAO
+import org.example.DAO.EspeceMonstreDAO
 import org.example.item.Badge
 import org.example.dresseur.Entraineur
 import org.example.item.CapsuleTechnique
@@ -19,9 +20,11 @@ import org.example.monstre.IndividuMonstre
 val db = BDD()
 //Les DAO
 val entraineurDAO= EntraineurDAO(db)
+val especeMonstreDAO = EspeceMonstreDAO(db)
 
 //Les listes
 val listeEntraineur = entraineurDAO.findAll()
+val listeEspeceMonstreDAO = especeMonstreDAO.findAll()
 
 
 //Declaration des Entraineurs

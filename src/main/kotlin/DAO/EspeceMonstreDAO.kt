@@ -25,7 +25,7 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
      */
     fun findAll(): MutableList<EspeceMonstre> {
         val result = mutableListOf<EspeceMonstre>()
-        val sql = "SELECT * FROM EspeceMonstres "
+        val sql = "SELECT * FROM EspeceMonstre"
         val requetePreparer = bdd.connectionBDD!!.prepareStatement(sql)
         val resultatRequete = bdd.executePreparedStatement(requetePreparer)
 
@@ -47,8 +47,8 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
                 val modDefenseSpe = resultatRequete.getDouble("modDefenseSpe")
                 val modPv = resultatRequete.getDouble("modPv")
                 val description = resultatRequete.getString("description")
-                val particularites = resultatRequete.getString("particularites")
-                val caracteres = resultatRequete.getString("caractere")
+                val particularite = resultatRequete.getString("particularite")
+                val caracteres = resultatRequete.getString("caracteres")
                 result.add(EspeceMonstre(
                     id,
                     nom,
@@ -66,7 +66,7 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
                     modDefenseSpe,
                     modPv,
                     description,
-                    particularites,
+                    particularite,
                     caracteres))
             }
         }
@@ -103,8 +103,8 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
             val modDefenseSpe = resultatRequete.getDouble("modDefenseSpe")
             val modPv = resultatRequete.getDouble("modPv")
             val description = resultatRequete.getString("description")
-            val particularites = resultatRequete.getString("particularites")
-            val caracteres = resultatRequete.getString("caractere")
+            val  particularite = resultatRequete.getString(" particularite")
+            val caracteres = resultatRequete.getString("caracteres")
             result = EspeceMonstre(
                 id,
                 nom,
@@ -122,7 +122,7 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
                 modDefenseSpe,
                 modPv,
                 description,
-                particularites,
+                 particularite,
                 caracteres)
         }
 
@@ -160,8 +160,8 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
                 val modDefenseSpe = resultatRequete.getDouble("modDefenseSpe")
                 val modPv = resultatRequete.getDouble("modPv")
                 val description = resultatRequete.getString("description")
-                val particularites = resultatRequete.getString("particularites")
-                val caracteres = resultatRequete.getString("caractere")
+                val  particularite = resultatRequete.getString(" particularite")
+                val caracteres = resultatRequete.getString("caracteres")
                 result.add(EspeceMonstre(id,
                     nom,
                     type,
@@ -178,7 +178,7 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
                     modDefenseSpe,
                     modPv,
                     description,
-                    particularites,
+                     particularite,
                     caracteres))
             }
         }
@@ -189,7 +189,7 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
     /**
      * Insère ou met à jour une espèce dans la base.
      *
-     * @param especeMonstre L'espèce à sauvegardée.
+     * @param especeMonstre L'espèce à sauvegarder.
      * @return L'espèce sauvegardée avec son ID mis à jour si insertion.
      */
     fun save(especeMonstre: EspeceMonstre): EspeceMonstre? {
@@ -197,7 +197,7 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
 
         if (especeMonstre.id == 0) {
             // Insertion
-            val sql = "INSERT INTO EspeceMonstre (nom, type , baseAttaque, baseDefense, baseVitesse, baseAttaqueSpe , baseDefenseSpe, basePv, modAttaque, modDefense, modVitesse, modAttaqueSpe, modDefenseSpe, modPv, description, particularites, caracteres) VALUES (?,?, ?,?, ?,?, ?,?, ?,?, ?,?, ?,?, ?,?,?)"
+            val sql = "INSERT INTO EspeceMonstre (nom, type , baseAttaque, baseDefense, baseVitesse, baseAttaqueSpe , baseDefenseSpe, basePv, modAttaque, modDefense, modVitesse, modAttaqueSpe, modDefenseSpe, modPv, description,  particularite, caracteres) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             requetePreparer = bdd.connectionBDD!!.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
             requetePreparer.setString(1, especeMonstre.nom)
             requetePreparer.setString(2, especeMonstre.type)
@@ -214,11 +214,11 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
             requetePreparer.setDouble(13, especeMonstre.modDefenseSpe)
             requetePreparer.setDouble(14, especeMonstre.modPv)
             requetePreparer.setString(15, especeMonstre.description)
-            requetePreparer.setString(16, especeMonstre.particularites)
+            requetePreparer.setString(16, especeMonstre. particularite)
             requetePreparer.setString(17, especeMonstre.caracteres)
         } else {
             // Mise à jour
-            val sql = "UPDATE EspeceMonstre SET nom = ?, type = ?, baseAttaque = ?,baseDefense = ?,baseVitesse = ?,baseAttaqueSpe = ?,baseDefenseSpe = ?,basePv = ?,modAttaque = ?,modDefense = ?,modVitesse = ?,modAttaqueSpe = ?,modDefenseSpe = ?,modPv = ?,description = ?,particularites = ?,caracteres = ? WHERE id = ?"
+            val sql = "UPDATE EspeceMonstre SET nom = ?, type = ?, baseAttaque = ?,baseDefense = ?,baseVitesse = ?,baseAttaqueSpe = ?,baseDefenseSpe = ?,basePv = ?,modAttaque = ?,modDefense = ?,modVitesse = ?,modAttaqueSpe = ?,modDefenseSpe = ?,modPv = ?,description = ?, particularite = ?,caracteres = ? WHERE id = ?"
             requetePreparer = bdd.connectionBDD!!.prepareStatement(sql)
             requetePreparer.setString(1, especeMonstre.nom)
             requetePreparer.setString(2, especeMonstre.type)
@@ -235,7 +235,7 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
             requetePreparer.setDouble(13, especeMonstre.modDefenseSpe)
             requetePreparer.setDouble(14, especeMonstre.modPv)
             requetePreparer.setString(15, especeMonstre.description)
-            requetePreparer.setString(16, especeMonstre.particularites)
+            requetePreparer.setString(16, especeMonstre. particularite)
             requetePreparer.setString(17, especeMonstre.caracteres)
             requetePreparer.setInt(18, especeMonstre.id)
         }
