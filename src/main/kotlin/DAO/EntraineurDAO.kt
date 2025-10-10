@@ -35,6 +35,29 @@ class EntraineurDAO(val bdd: BDD = db) {
         requetePreparer.close()
         return result
     }
-    //Page 16
+
+    /**
+     * Recherche un entraîneur par son identifiant unique.
+     *
+     * @param id L'identifiant de l'entraîneur.
+     * @return L'entraîneur trouvé ou `null` si aucun résultat.
+     */
+    fun findById(id: Int): Entraineur? {
+        var result: Entraineur? = null
+        val sql = "SELECT * FROM Entraineurs WHERE id = ?"
+        val requetePreparer = bdd.connectionBDD!!.prepareStatement(sql)
+        requetePreparer.setInt(1, id) // insere la valeur de l'id dans la requete preparer
+        val resultatRequete = bdd.executePreparedStatement(requetePreparer)
+
+        if (resultatRequete != null && resultatRequete.next()) {
+            val nom = resultatRequete.getString("nom")
+            val argents = resultatRequete.getInt("argents")
+            result = Entraineur(id, nom, argents)
+        }
+
+        requetePreparer.close()
+        return result
+    }
+
 
 }
