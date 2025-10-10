@@ -1,5 +1,7 @@
 import org.example.db
 import org.example.dresseur.Entraineur
+import java.sql.PreparedStatement
+import java.sql.Statement
 
 /**
  * DAO (Data Access Object) permettant d'interagir avec la table `Entraineurs`.
@@ -84,6 +86,46 @@ class EntraineurDAO(val bdd: BDD = db) {
         requetePreparer.close()
         return result
     }
+
+    /**
+     * Insère ou met à jour un entraîneur dans la base.
+     *
+     * @param entraineur L'entraîneur à sauvegarder.
+     * @return L'entraîneur sauvegardé avec son ID mis à jour si insertion.
+     */
+    fun save(entraineur: Entraineur): Entraineur? {
+        val requetePreparer: PreparedStatement
+
+        if (entraineur.id == 0) {
+            // Insertion
+            val sql = "INSERT INTO Entraineurs (nom, argents) VALUES (?, ?)"
+            requetePreparer = bdd.connectionBDD!!.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+            requetePreparer.setString(1, entraineur.nom)
+            requetePreparer.setInt(2, entraineur.argents)
+        } else {
+            // Mise à jour
+            val sql = "UPDATE Entraineurs SET nom = ?, argents = ? WHERE id = ?"
+            requetePreparer = bdd.connectionBDD!!.prepareStatement(sql)
+            requetePreparer.setString(1, entraineur.nom)
+            requetePreparer.setInt(2, entraineur.argents)
+            requetePreparer.setInt(3, entraineur.id)
+        }
+
+        val nbLigneMaj = requetePreparer.executeUpdate()
+
+        if (nbLigneMaj > 0) {
+            val generatedKeys = requetePreparer.generatedKeys
+            if (generatedKeys.next()) {
+                entraineur.id = generatedKeys.getInt(1)
+            }
+            requetePreparer.close()
+            return entraineur
+        }
+
+        requetePreparer.close()
+        return null
+    }
+
 
 
 

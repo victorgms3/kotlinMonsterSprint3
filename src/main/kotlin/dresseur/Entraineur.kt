@@ -15,7 +15,7 @@ import org.example.monstre.IndividuMonstre
 
  */
 class Entraineur (
-    val id :  Int,
+    var id :  Int,
     var nom : String,
     var argents : Int,
     var equipeMonstre: MutableList<IndividuMonstre> = mutableListOf(),
