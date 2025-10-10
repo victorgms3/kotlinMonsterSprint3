@@ -186,6 +186,72 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
         requetePreparer.close()
         return result
     }
+    /**
+     * Insère ou met à jour une espèce dans la base.
+     *
+     * @param especeMonstre L'espèce à sauvegardée.
+     * @return L'espèce sauvegardée avec son ID mis à jour si insertion.
+     */
+    fun save(especeMonstre: EspeceMonstre): EspeceMonstre? {
+        val requetePreparer: PreparedStatement
 
+        if (especeMonstre.id == 0) {
+            // Insertion
+            val sql = "INSERT INTO EspeceMonstre (nom, type , baseAttaque, baseDefense, baseVitesse, baseAttaqueSpe , baseDefenseSpe, basePv, modAttaque, modDefense, modVitesse, modAttaqueSpe, modDefenseSpe, modPv, description, particularites, caracteres) VALUES (?,?, ?,?, ?,?, ?,?, ?,?, ?,?, ?,?, ?,?,?)"
+            requetePreparer = bdd.connectionBDD!!.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+            requetePreparer.setString(1, especeMonstre.nom)
+            requetePreparer.setString(2, especeMonstre.type)
+            requetePreparer.setInt(3, especeMonstre.baseAttaque)
+            requetePreparer.setInt(4, especeMonstre.baseDefense)
+            requetePreparer.setInt(5, especeMonstre.baseVitesse)
+            requetePreparer.setInt(6, especeMonstre.baseAttaqueSpe)
+            requetePreparer.setInt(7, especeMonstre.baseDefenseSpe)
+            requetePreparer.setInt(8, especeMonstre.basePv)
+            requetePreparer.setDouble(9, especeMonstre.modAttaque)
+            requetePreparer.setDouble(10, especeMonstre.modDefense)
+            requetePreparer.setDouble(11, especeMonstre.modVitesse)
+            requetePreparer.setDouble(12, especeMonstre.modAttaqueSpe)
+            requetePreparer.setDouble(13, especeMonstre.modDefenseSpe)
+            requetePreparer.setDouble(14, especeMonstre.modPv)
+            requetePreparer.setString(15, especeMonstre.description)
+            requetePreparer.setString(16, especeMonstre.particularites)
+            requetePreparer.setString(17, especeMonstre.caracteres)
+        } else {
+            // Mise à jour
+            val sql = "UPDATE EspeceMonstre SET nom = ?, type = ?, baseAttaque = ?,baseDefense = ?,baseVitesse = ?,baseAttaqueSpe = ?,baseDefenseSpe = ?,basePv = ?,modAttaque = ?,modDefense = ?,modVitesse = ?,modAttaqueSpe = ?,modDefenseSpe = ?,modPv = ?,description = ?,particularites = ?,caracteres = ? WHERE id = ?"
+            requetePreparer = bdd.connectionBDD!!.prepareStatement(sql)
+            requetePreparer.setString(1, especeMonstre.nom)
+            requetePreparer.setString(2, especeMonstre.type)
+            requetePreparer.setInt(3, especeMonstre.baseAttaque)
+            requetePreparer.setInt(4, especeMonstre.baseDefense)
+            requetePreparer.setInt(5, especeMonstre.baseVitesse)
+            requetePreparer.setInt(6, especeMonstre.baseAttaqueSpe)
+            requetePreparer.setInt(7, especeMonstre.baseDefenseSpe)
+            requetePreparer.setInt(8, especeMonstre.basePv)
+            requetePreparer.setDouble(9, especeMonstre.modAttaque)
+            requetePreparer.setDouble(10, especeMonstre.modDefense)
+            requetePreparer.setDouble(11, especeMonstre.modVitesse)
+            requetePreparer.setDouble(12, especeMonstre.modAttaqueSpe)
+            requetePreparer.setDouble(13, especeMonstre.modDefenseSpe)
+            requetePreparer.setDouble(14, especeMonstre.modPv)
+            requetePreparer.setString(15, especeMonstre.description)
+            requetePreparer.setString(16, especeMonstre.particularites)
+            requetePreparer.setString(17, especeMonstre.caracteres)
+            requetePreparer.setInt(18, especeMonstre.id)
+        }
 
+        val nbLigneMaj = requetePreparer.executeUpdate()
+
+        if (nbLigneMaj > 0) {
+            val generatedKeys = requetePreparer.generatedKeys
+            if (generatedKeys.next()) {
+                especeMonstre.id = generatedKeys.getInt(1)
+            }
+            requetePreparer.close()
+            return especeMonstre
+        }
+
+        requetePreparer.close()
+        return null
+    }
 }
