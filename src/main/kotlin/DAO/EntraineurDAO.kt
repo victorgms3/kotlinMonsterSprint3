@@ -148,6 +148,22 @@ class EntraineurDAO(val bdd: BDD = db) {
         }
     }
 
+    /**
+     * Sauvegarde plusieurs entraîneurs dans la base de données.
+     *
+     * @param entraineurs Liste d'entraîneurs à sauvegarder.
+     * @return Liste des entraîneurs sauvegardés.
+     */
+    fun saveAll(entraineurs: Collection<Entraineur>): MutableList<Entraineur> {
+        val result = mutableListOf<Entraineur>()
+        for (e in entraineurs) {
+            val sauvegarde = save(e)
+            if (sauvegarde != null) result.add(sauvegarde)
+        }
+        return result
+    }
+
+
 
 
 
