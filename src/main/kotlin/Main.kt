@@ -280,10 +280,10 @@ fun main() {
     initialiserRelationsElements()
     especeflamkip.palierTechnique.addAll(paliersFlamkip)
     especeflamkip.basePv = 500
-    db.close()
     val testJouer = nouvellePartie()
     testJouer.choixStarter()
     testJouer.jouer()
+    db.close()
 }
 
 
@@ -305,6 +305,8 @@ fun nouvellePartie() : Partie{
         val nom = readln().toString()
         joueur.nom = nom
     }
+    joueur.id=0
+    entraineurDAO.save(joueur)
     return Partie(1, joueur, route1)
 }
 
