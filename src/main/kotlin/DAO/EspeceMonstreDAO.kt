@@ -254,4 +254,24 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
         requetePreparer.close()
         return null
     }
+    /**
+     * Supprime une espèce par son identifiant.
+     *
+     * @param id L'ID de l'espèce à supprimer.
+     * @return `true` si la suppression a réussi, sinon `false`.
+     */
+    fun deleteById(id: Int): Boolean {
+        val sql = "DELETE FROM EspeceMonstre WHERE id = ?"
+        val requetePreparer = bdd.connectionBDD!!.prepareStatement(sql)
+        requetePreparer.setInt(1, id)
+
+        return try {
+            val nbLigneMaj = requetePreparer.executeUpdate()
+            requetePreparer.close()
+            nbLigneMaj > 0
+        } catch (erreur: SQLException) {
+            println("Erreur lors de la suppression de l'espèce : ${erreur.message}")
+            false
+        }
+    }
 }
