@@ -1,6 +1,7 @@
 import org.example.db
 import org.example.dresseur.Entraineur
 import java.sql.PreparedStatement
+import java.sql.SQLException
 import java.sql.Statement
 
 /**
@@ -125,6 +126,28 @@ class EntraineurDAO(val bdd: BDD = db) {
         requetePreparer.close()
         return null
     }
+
+    /**
+    * Supprime un entraîneur par son identifiant.
+    *
+    * @param id L'ID de l'entraîneur à supprimer.
+    * @return `true` si la suppression a réussi, sinon `false`.
+    */
+    fun deleteById(id: Int): Boolean {
+        val sql = "DELETE FROM Entraineurs WHERE id = ?"
+        val requetePreparer = bdd.connectionBDD!!.prepareStatement(sql)
+        requetePreparer.setInt(1, id)
+
+        return try {
+            val nbLigneMaj = requetePreparer.executeUpdate()
+            requetePreparer.close()
+            nbLigneMaj > 0
+        } catch (erreur: SQLException) {
+            println("Erreur lors de la suppression de l'entraîneur : ${erreur.message}")
+            false
+        }
+    }
+
 
 
 
