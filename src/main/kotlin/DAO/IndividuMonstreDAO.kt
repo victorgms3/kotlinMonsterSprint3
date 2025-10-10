@@ -2,7 +2,7 @@ package org.example.DAO
 
 import BDD
 import org.example.db
-import org.example.monstre.EspeceMonstre
+import org.example.monstre.IndividuMonstre
 import java.sql.PreparedStatement
 import java.sql.SQLException
 import java.sql.Statement
@@ -16,5 +16,5 @@ import java.sql.Statement
  *
  * @param bdd L'objet de connexion à la base de données.
  */
-class IndividuMonstreDAO {
+class IndividuMonstreDAO (val bdd: BDD = db){
 }
