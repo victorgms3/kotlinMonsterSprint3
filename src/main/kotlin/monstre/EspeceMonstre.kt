@@ -24,7 +24,7 @@ import java.io.File
  * @property modPv Modificateur pour les points de vie.
  * @property description Description textuelle de l'espèce.
  * @property particularites Particularités ou traits distinctifs de l'espèce.
- * @property caractères Traits généraux liés à l'espèce.
+ * @property caracteres Traits généraux liés à l'espèce.
  * @property elements Liste des éléments associés
  * @property PalierTechnique Liste les paliers de la technique.
  */
@@ -46,7 +46,7 @@ class EspeceMonstre (
     val modPv: Double,
     val description: String = "",
     val particularites: String = "",
-    val caractères: String = "",
+    val caracteres: String = "",
     val elements: MutableList<Element> = mutableListOf<Element>(),
     var palierTechnique : MutableList<PalierTechnique> = mutableListOf<PalierTechnique>()
 )
