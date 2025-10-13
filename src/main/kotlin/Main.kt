@@ -25,8 +25,8 @@ val especeMonstreDAO = EspeceMonstreDAO(db)
 val individuMonstreDAO = IndividuMonstreDAO(db)
 //Les listes
 //val listeEntraineur = entraineurDAO.findByNom("Bob")
-val listeEspeceMonstreDAO = especeMonstreDAO.findById(4)
-//val listeIndividuMonstre = individuMonstreDAO.findAll()
+//val listeEspeceMonstreDAO = especeMonstreDAO.findById(4)
+val listeIndividuMonstre = individuMonstreDAO.findById(5)
 
 
 //Declaration des Entraineurs

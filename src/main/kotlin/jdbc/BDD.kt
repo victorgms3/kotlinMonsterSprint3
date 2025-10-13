@@ -7,8 +7,6 @@ import java.sql.*
  * @property url L'URL de la base de données.
  * @property user Le nom d'utilisateur pour la connexion à la base de données.
  * @property password Le mot de passe pour la connexion à la base de données.
- * TODO : Remplacer localhost par l'adresse IP du serveur de BDD.
- * TODO : le user et password par celui de la BDD.
  */
 class BDD(
 

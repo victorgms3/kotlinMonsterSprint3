@@ -6,19 +6,28 @@ import java.sql.PreparedStatement
 import java.sql.SQLException
 import java.sql.Statement
 
-//en francais
 /**
- * Data Access Object (DAO) for managing `IndividuMonstre` entities.
- * This class provides operations to interact with the database, including retrieval, creation, update, and deletion
- * of `IndividuMonstre` records based on specified criteria.
+ * Classe de gestion des opérations liées à la table `IndividuMonstre` dans la base de données.
  *
- * @property bdd The database connection object used for executing queries.
+ * Cette classe fournit des méthodes pour exécuter les opérations CRUD (Create, Read, Update, Delete)
+ * sur les enregistrements de la table `IndividuMonstre`. Elle permet de manipuler les entités
+ * `IndividuMonstre` et de les relier avec leurs entités associées, telles que les espèces
+ * ou les entraîneurs.
+ *
+ * @constructor Initialise une instance de `IndividuMonstreDAO` avec une base de données donnée.
+ * @property bdd Instance de la base de données (`BDD`) utilisée pour exécuter les requêtes.
  */
 class IndividuMonstreDAO(val bdd: BDD = db) {
 
     private val entraineurDAO = EntraineurDAO(bdd)
     private val especeDAO = EspeceMonstreDAO(bdd)
 
+    /**
+     * Retournes toutes les instances d' `IndividuMonstre` de la bdd.
+     *
+     * @return Liste mutables qui contient avec tout les elements d'`IndividuMonstre` instances.
+     *         si il n'y as pas d'entrer trouvé, une liste vide est return.
+     */
     fun findAll(): MutableList<IndividuMonstre> {
         val result = mutableListOf<IndividuMonstre>()
         val sql = "SELECT * FROM IndividuMonstre"
@@ -47,6 +56,12 @@ class IndividuMonstreDAO(val bdd: BDD = db) {
         return result
     }
 
+    /**
+     * Récupère une instance d'`IndividuMonstre` depuis la base de données à partir de son identifiant unique.
+     *
+     * @param idRecherche L'identifiant unique de l'`IndividuMonstre` à récupérer.
+     * @return L'instance d'`IndividuMonstre` correspondant à l'ID fourni, ou `null` si aucun enregistrement ne correspond.
+     */
     fun findById(idRecherche: Int): IndividuMonstre? {
         var result: IndividuMonstre? = null
         val sql = "SELECT * FROM IndividuMonstre WHERE id = ?"
@@ -73,6 +88,13 @@ class IndividuMonstreDAO(val bdd: BDD = db) {
         return result
     }
 
+    /**
+     * Récupère une liste d'objets `IndividuMonstre` dont le nom correspond au terme recherché.
+     *
+     * @param nomRechercher Le nom du monstre à rechercher.
+     * @return Une liste mutable d'`IndividuMonstre` correspondant au nom fourni.
+     *         Si aucune correspondance n'est trouvée, une liste vide est retournée.
+     */
     fun findByNom(nomRechercher: String): MutableList<IndividuMonstre> {
         var result = mutableListOf<IndividuMonstre>()
         val sql = "SELECT * FROM IndividuMonstre WHERE nom = ?"
@@ -101,6 +123,14 @@ class IndividuMonstreDAO(val bdd: BDD = db) {
         return result
     }
 
+    /**
+     * Enregistre ou met à jour une instance d'IndividuMonstre dans la base de données.
+     * Si l'instance possède un ID égal à 0, elle est insérée comme un nouvel enregistrement.
+     * Sinon, l'enregistrement existant correspondant à l'ID est mis à jour.
+     *
+     * @param monstre L'instance d'IndividuMonstre à enregistrer ou mettre à jour.
+     * @return L'instance d'IndividuMonstre mise à jour, ou null si l'opération a échoué.
+     */
     fun save(monstre: IndividuMonstre): IndividuMonstre? {
         val requetePreparer: PreparedStatement
         val especeId = monstre.espece.id
@@ -148,6 +178,12 @@ class IndividuMonstreDAO(val bdd: BDD = db) {
         return null
     }
 
+    /**
+     * Supprime un enregistrement dans la table `IndividuMonstre` correspondant à l'ID fourni.
+     *
+     * @param id L'identifiant unique de l'enregistrement à supprimer.
+     * @return `true` si la suppression s'est déroulée avec succès, `false` sinon.
+     */
     fun deleteById(id: Int): Boolean {
         val sql = "DELETE FROM IndividuMonstre WHERE id = ?"
         val requetePreparer = bdd.connectionBDD!!.prepareStatement(sql)
