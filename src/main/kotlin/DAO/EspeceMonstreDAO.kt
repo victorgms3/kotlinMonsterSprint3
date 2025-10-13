@@ -87,6 +87,7 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
         val resultatRequete = bdd.executePreparedStatement(requetePreparer)
 
         if (resultatRequete != null && resultatRequete.next()) {
+            val id = resultatRequete.getInt("id")
             val nom = resultatRequete.getString("nom")
             val type = resultatRequete.getString("type")
             val baseAttaque = resultatRequete.getInt("baseAttaque")
@@ -102,7 +103,7 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
             val modDefenseSpe = resultatRequete.getDouble("modDefenseSpe")
             val modPv = resultatRequete.getDouble("modPv")
             val description = resultatRequete.getString("description")
-            val  particularite = resultatRequete.getString(" particularite")
+            val particularite = resultatRequete.getString("particularite")
             val caracteres = resultatRequete.getString("caracteres")
             result = EspeceMonstre(
                 id,
@@ -121,7 +122,7 @@ class EspeceMonstreDAO(val bdd: BDD = db) {
                 modDefenseSpe,
                 modPv,
                 description,
-                 particularite,
+                particularite,
                 caracteres)
         }
 

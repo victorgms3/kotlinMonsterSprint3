@@ -1,10 +1,19 @@
 import org.example.db
 import org.example.DAO.EspeceMonstreDAO
+import org.example.dresseur.Entraineur
 import org.example.monstre.IndividuMonstre
 import java.sql.PreparedStatement
 import java.sql.SQLException
 import java.sql.Statement
 
+//en francais
+/**
+ * Data Access Object (DAO) for managing `IndividuMonstre` entities.
+ * This class provides operations to interact with the database, including retrieval, creation, update, and deletion
+ * of `IndividuMonstre` records based on specified criteria.
+ *
+ * @property bdd The database connection object used for executing queries.
+ */
 class IndividuMonstreDAO(val bdd: BDD = db) {
 
     private val entraineurDAO = EntraineurDAO(bdd)
@@ -57,6 +66,34 @@ class IndividuMonstreDAO(val bdd: BDD = db) {
 
             if (espece != null) {
                 result = IndividuMonstre(id, nom, espece, entraineur, expInit)
+            }
+        }
+
+        requetePreparer.close()
+        return result
+    }
+
+    fun findByNom(nomRechercher: String): MutableList<IndividuMonstre> {
+        var result = mutableListOf<IndividuMonstre>()
+        val sql = "SELECT * FROM IndividuMonstre WHERE nom = ?"
+        val requetePreparer = bdd.connectionBDD!!.prepareStatement(sql)
+        requetePreparer.setString(1, nomRechercher)
+        val resultatRequete = bdd.executePreparedStatement(requetePreparer)
+
+        if (resultatRequete != null) {
+            while (resultatRequete.next()) {
+                val id = resultatRequete.getInt("id")
+                val nom = resultatRequete.getString("nom")
+                val especeId = resultatRequete.getInt("espece_id")
+                val entraineurId = resultatRequete.getInt("entraineur_id")
+                val expInit = resultatRequete.getDouble("expInit")
+
+                val espece = especeDAO.findById(especeId)
+                val entraineur = if (entraineurId != 0) entraineurDAO.findById(entraineurId) else null
+
+                if (espece != null) {
+                    result.add(IndividuMonstre(id, nom, espece, entraineur, expInit))
+                }
             }
         }
 
