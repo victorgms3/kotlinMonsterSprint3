@@ -1,5 +1,5 @@
+import java.io.FileInputStream
 import java.sql.*
-
 
 /**
  * Cette classe gère la connexion à une base de données JDBC et l'exécution de requêtes SQL préparées.
@@ -9,10 +9,9 @@ import java.sql.*
  * @property password Le mot de passe pour la connexion à la base de données.
  */
 class BDD(
-
-    var url: String = "jdbc:mysql://172.16.0.210:3306/db_monsters_vgomessilv",
-    var user: String = "vgomessilv",
-    var password: String = "Dreeko52",
+    var url: String = "",
+    var user: String = "",
+    var password: String = "",
 ) {
     var connectionBDD: Connection? = null
 
@@ -20,6 +19,21 @@ class BDD(
      * Initialise une instance de la classe BDD et établit une connexion à la base de données.
      */
     init {
+        // Chargement des paramètres depuis le fichier config.properties si url, user, password sont vides
+        if (url.isEmpty() || user.isEmpty() || password.isEmpty()) {
+            val props = java.util.Properties()
+            try {
+                FileInputStream("config.properties").use { fis ->
+                    props.load(fis)
+                }
+                url = props.getProperty("db.url", "")
+                user = props.getProperty("db.user", "")
+                password = props.getProperty("db.password", "")
+            } catch (e: Exception) {
+                println("Erreur lors du chargement du fichier de configuration : ${e.message}")
+            }
+        }
+
         try {
             // Établir une connexion à la base de données lors de la création de l'objet BDD
             this.connectionBDD = getConnection()
@@ -34,7 +48,7 @@ class BDD(
      *
      * @return La connexion à la base de données.
      */
-    fun getConnection(): java.sql.Connection? {
+    fun getConnection(): Connection? {
         //Chargement du driver
         Class.forName("com.mysql.cj.jdbc.Driver")
         // Créer et retourner une connexion à la base de données
