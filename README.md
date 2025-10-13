@@ -1,4 +1,4 @@
-# KotlinMonsterSprint3 — README
+# KotlinMonster — README
 
 Un projet Kotlin simulant un univers de monstres avec combat, espèces, techniques, dresseurs, DAO JDBC (MySQL) et ressources visuelles ASCII. Il inclut une couche d’accès aux données, une logique de jeu (combats, techniques, progression), des entités riches et quelques tests.
 
@@ -19,7 +19,7 @@ Un projet Kotlin simulant un univers de monstres avec combat, espèces, techniqu
 - Licence
 
 ## Présentation
-KotlinMonsterSprint3 est un mini-projet de type RPG/monster-collector. Il offre:
+KotlinMonster est un mini-projet de type RPG/monster-collector. Il offre:
 - Une modélisation d’espèces de monstres (statistiques de base, modificateurs, éléments, descriptions).
 - Des individus de monstres (stats variables, niveau, PV, techniques, progression via l’XP).
 - Des dresseurs (inventaire, argent, équipe de monstres).

@@ -286,9 +286,11 @@ fun main() {
     especeflamkip.palierTechnique.addAll(paliersFlamkip)
     especeflamkip.basePv = 500
     val testJouer = nouvellePartie()
-    testJouer.choixStarter()
-    testJouer.jouer()
+//    testJouer.choixStarter()
+//    testJouer.jouer()
     db.close()
+    println(especepikachu.afficheArt())
+    println(especepikachu.afficheArt(false))
 }
 
 
