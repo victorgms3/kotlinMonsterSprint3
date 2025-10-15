@@ -99,4 +99,3 @@ class BDD(
 
 Ce projet m'a permis de progresser en Kotlin, d'améliorer ma compréhension de la POO et de la gestion de base de données, tout en développant ma capacité à résoudre des problèmes techniques de manière autonome.
 
-![ERD.png](src/main/resources/ERD.png)
