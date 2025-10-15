@@ -60,7 +60,15 @@ fun afficheArt(deFace: Boolean=true): String{
 
 #### 🌍 Classe [Zone.kt](src/main/kotlin/monde/Zone.kt)
 - Représente un lieu de capture avec : `id`, `nom`, `expZone`, `especesMonstres`, `zoneSuivante`, `zonePrecedente`.
-- Préparation des méthodes `genereMonstre()` et `rencontreMonstre()` (TODO à compléter).
+- Préparation des méthodes `genereMonstre()` et `rencontreMonstre()`.
+```kotlin
+fun genereMonstre() : IndividuMonstre {
+        val facteur = (80..120).random() / 100.0
+        val exp = expZone * facteur
+        val especeChoisi = especeMonstre.random()
+        return IndividuMonstre(0, especeChoisi.nom, especeChoisi, null, exp)
+    }
+```
 
 #### ⚔️ Classe [IndividuMonstre.kt](src/main/kotlin/monstre/IndividuMonstre.kt)
 - Représente un monstre individuel avec statistiques, niveau, expérience et points de vie.
@@ -71,8 +79,8 @@ fun afficheArt(deFace: Boolean=true): String{
 - Tests fonctionnels : création de plusieurs monstres, gestion de l’expérience et des PV, vérification du level-up.
 
 #### 🎒 Classes [Item.kt](src/main/kotlin/item/Item.kt) et [Badge.kt](src/main/kotlin/item/Badge.kt)
-- `Item` : classe de base (id, nom, description).
-- `Badge` : sous-classe héritant de `Item` avec ajout du `champion` (le dresseur à battre).
+- `Item` : classe mère (id, nom, description).
+- `Badge` : classe héritant de `Item` avec ajout du `champion` (le dresseur à battre).
 
 #### 🧰 Interface [Utilisable.kt](src/main/kotlin/item/Utilisable.kt)
 - Définit le contrat d’un objet pouvant être utilisé sur un monstre (méthode `utiliser(cible: IndividuMonstre): Boolean`).
@@ -98,17 +106,16 @@ fun afficheArt(deFace: Boolean=true): String{
     - `jouer()` pour lancer la boucle de jeu.
 
 #### 🧑‍💻 Fichier [Main.kt](src/main/kotlin/Main.kt)
-- Contient l’initialisation des objets : dresseurs, espèces, zones, items.
+- Contient l’initialisation des objets : dresseurs, espèces, zones, items (Changé du à l'avancement dans le projet avec la bdd).
 - Fonction `nouvellePartie()` pour créer une partie et démarrer le jeu.
-- Fonction `main()` pour exécuter le programme principal.
+- Fonction `initialiserRelationsElements` pour initialiser les differents éléments aux especes créer.
 
 ---
 
 ### ⚗️ Tests fonctionnels
-- Test de la fonction `changeCouleur()` avec plusieurs cas.
 - Vérification du comportement des classes via le **mode Debug**.
 - Test de création et d’évolution des monstres (`levelUp`, `attaquer`, `renommer`).
-- Simulation d’un combat complet via `CombatMonstre`.
+- Simulation d’un combat complet via `CombatMonstre` en boostant les statistiques de certain monstre (pour les bien faits des differents test).
 
 ---
 
@@ -119,6 +126,7 @@ fun afficheArt(deFace: Boolean=true): String{
   C’est seulement après les cours suivants que j’ai réussi à mieux saisir leur utilité et leur logique.
 - Compréhension des relations entre classes (héritage, dépendances).
 - Syntaxe Kotlin parfois déroutante, notamment sur la gestion des propriétés.
+- 
 
 ---
 
