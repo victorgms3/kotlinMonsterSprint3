@@ -33,16 +33,7 @@ Création d’une fonction pour colorer le texte dans la console à l’aide des
 
 #### 👤 Classe [Entraineur.kt](src/main/kotlin/dresseur/Entraineur.kt)
 - Propriétés : `id`, `nom`, `argents`, `equipeMonstre`, `boiteMonstre`, `sacAItems`.
-```kotlin
-class Entraineur (
-    var id :  Int,
-    var nom : String,
-    var argents : Int,
-    var equipeMonstre: MutableList<IndividuMonstre> = mutableListOf(),
-    var boiteMonstre: MutableList<IndividuMonstre> = mutableListOf(),
-    var sacAItems: MutableList<Item> = mutableListOf()
-){}
-```
+
 - Méthode : `afficheDetail()` pour afficher les informations du dresseur.
 ```kotlin
 fun afficheDetail(){
@@ -56,7 +47,16 @@ fun afficheDetail(){
 - Classe assez simple à créer, j'avais mis en TODO equipeMonstre, boiteMonstre et sacAItems en attendant la création des autres classes.
 #### 🐉 Classe [EspeceMonstre.kt](src/main/kotlin/monstre/EspeceMonstre.kt)
 - Définition des caractéristiques de base d’une espèce (attaques, défenses, PV…).
+
 - Méthode `afficheArt()` pour afficher l’art ASCII associé au monstre (face ou dos).
+```kotlin
+fun afficheArt(deFace: Boolean=true): String{
+    val nomFichier = if(deFace) "front" else "back";
+    val art=  File("src/main/resources/art/${this.nom.lowercase()}/$nomFichier.txt").readText()
+    val safeArt = art.replace("/", "∕")
+    return safeArt.replace("\\u001B", "\u001B")
+}
+```
 
 #### 🌍 Classe [Zone.kt](src/main/kotlin/monde/Zone.kt)
 - Représente un lieu de capture avec : `id`, `nom`, `expZone`, `especesMonstres`, `zoneSuivante`, `zonePrecedente`.
@@ -70,18 +70,18 @@ fun afficheDetail(){
     - Méthodes `attaquer()`, `renommer()` et `afficheDetail()`.
 - Tests fonctionnels : création de plusieurs monstres, gestion de l’expérience et des PV, vérification du level-up.
 
-#### 🎒 Classes `Item` et `Badge`
+#### 🎒 Classes [Item.kt](src/main/kotlin/item/Item.kt) et [Badge.kt](src/main/kotlin/item/Badge.kt)
 - `Item` : classe de base (id, nom, description).
 - `Badge` : sous-classe héritant de `Item` avec ajout du `champion` (le dresseur à battre).
 
-#### 🧰 Interface `Utilisable`
+#### 🧰 Interface [Utilisable.kt](src/main/kotlin/item/Utilisable.kt)
 - Définit le contrat d’un objet pouvant être utilisé sur un monstre (méthode `utiliser(cible: IndividuMonstre): Boolean`).
 
-#### 🔴 Classe `MonsterKube`
+#### 🔴 Classe [MonsterKube.kt](src/main/kotlin/item/MonsterKube.kt)
 - Hérite de `Item` et implémente `Utilisable`.
 - Ajoute la propriété `chanceCapture` et la méthode `utiliser()` pour tenter de capturer un monstre.
 
-#### ⚔️ Classe `CombatMonstre`
+#### ⚔️ Classe [CombatMonstre.kt](src/main/kotlin/jeu/CombatMonstre.kt)
 - Gère un combat entre un monstre du joueur et un monstre sauvage.
 - Méthodes principales :
     - `gameOver()`
@@ -89,7 +89,7 @@ fun afficheDetail(){
     - `actionAdversaire()` / `actionJoueur()`
     - `afficheCombat()`, `jouer()` et `lancerCombat()`
 
-#### 🧭 Classe `Partie`
+#### 🧭 Classe [Partie.kt](src/main/kotlin/jeu/Partie.kt)
 - Gère l’état global du jeu (joueur, zone, progression).
 - Méthodes principales :
     - `choixStarter()` (choix du monstre de départ).
@@ -97,7 +97,7 @@ fun afficheDetail(){
     - `examineEquipe()`
     - `jouer()` pour lancer la boucle de jeu.
 
-#### 🧑‍💻 Fichier `Main.kt`
+#### 🧑‍💻 Fichier [Main.kt](src/main/kotlin/Main.kt)
 - Contient l’initialisation des objets : dresseurs, espèces, zones, items.
 - Fonction `nouvellePartie()` pour créer une partie et démarrer le jeu.
 - Fonction `main()` pour exécuter le programme principal.
