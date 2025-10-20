@@ -165,4 +165,5 @@ Vous pouvez prévisualiser `ERD.puml` avec un plugin PlantUML (IDE) ou via un se
 - Respectez le style de code, ajoutez/mettez à jour les tests quand nécessaire.
 
 ## Licence
-Indiquez ici votre licence (MIT, Apache-2.0, etc.). Si aucune licence n’est fournie, le code est par défaut “tous droits réservés”.
+“tous droits réservés”.
+GOMES SILVA Victor BTS SIO22
