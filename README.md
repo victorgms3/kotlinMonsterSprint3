@@ -165,5 +165,4 @@ Vous pouvez prévisualiser `ERD.puml` avec un plugin PlantUML (IDE) ou via un se
 - Respectez le style de code, ajoutez/mettez à jour les tests quand nécessaire.
 
 ## Licence
-“tous droits réservés”.
 GOMES SILVA Victor BTS SIO22
