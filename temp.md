@@ -18,11 +18,11 @@ L’objectif principal était de construire la structure initiale du projet : co
 
 #### 2️⃣ Structure du projet
 Organisation en packages pour une meilleure lisibilité du code :
-- `dresseur` → classes liées aux entraîneurs.
-- `item` → gestion des objets (items, badges, kubes).
-- `jeu` → logique de jeu (combat, partie).
-- `monde` → zones, routes et environnements.
-- `monstres` → classes des espèces et des individus.
+- `dresseur` -> classes liées aux entraîneurs.
+- `item` -> gestion des objets (items, badges, kubes).
+- `jeu` -> logique de jeu (combat, partie).
+- `monde` -> zones, routes et environnements.
+- `monstres` -> classes des espèces et des individus.
 
 #### 3️⃣ Fonction utilitaire `changeCouleur()`
 Création d’une fonction pour colorer le texte dans la console à l’aide des **codes ANSI**, suivie d’un **test fonctionnel** avec différents scénarios (texte rouge, bleu, couleur inconnue…).
@@ -146,73 +146,149 @@ Le noyau du jeu est **entièrement fonctionnel** :
 - Les fondations sont prêtes pour les Sprints 2 et 3 (éléments, techniques, DAO, base de données).
 ---
 
-## 🎯 Sprint 2 — Module « Éléments et Techniques »
-
-### Objectif du module
-Mettre en place les mécaniques essentielles du gameplay :
-1. **Techniques** → attaques, buffs, debuffs, soins.
-2. **Éléments** → Feu, Eau, Plante, etc. avec un système de forces et faiblesses.
-3. **Paliers d’expérience** → système de progression (level-up).
-4. **CT (Capsules Techniques)** → objets permettant d’apprendre des techniques.
-
-### Points clés du développement
-- Création de la **classe `Element`** avec gestion des forces/faiblesses/immunités.
-- Méthode `efficaciteContre()` pour calculer l’efficacité entre deux éléments.
-- Ajout d’une liste d’éléments dans la classe `EspeceMonstre`.
-- Création d’objets `Element` (Feu, Eau, Plante, Insecte, Roche, Normal).
-- Introduction des **tests unitaires JUnit5** pour vérifier les comportements (méthodes, efficacité, bonus STAB, etc.).
-- Création de la **classe `Technique`** (id, nom, précision, multiplicateur, buffs/debuffs, élément associé).
-- Implémentation des méthodes :
-    - `calculPrecision()`
-    - `calculBonusStab()`
-    - `effet()` (inflige des dégâts ou effets spéciaux).
-- Ajout de la **classe `PalierTechnique`** et intégration des apprentissages automatiques via le level-up.
-- Extension de la **classe `IndividuMonstre`** avec gestion de techniques et apprentissage (`apprendreTechnique()`).
-- Création de la **classe `CapsuleTechnique`** héritée de `Item` et implémentant `Utilisable` pour enseigner une technique.
+## 🎮 Sprint 2 : Éléments et Techniques
 
 ---
 
-## 🧩 Sprint 3 — Base de Données & DAO
+### 🎯 Objectif du sprint
+Implémenter les mécaniques essentielles du combat et de la progression : éléments, techniques, paliers d’expérience et capsules techniques.
 
-### Objectif du module
-Connecter le projet Kotlin Monsters à une base de données relationnelle (MySQL/MariaDB) afin de :
-- Centraliser les données (entraîneurs, monstres, espèces…).
-- Automatiser les opérations CRUD (Create, Read, Update, Delete).
-- Utiliser des **DAO (Data Access Objects)** pour interagir avec la BDD.
+---
 
-### Étapes principales
-1. **Création de la BDD et des tables** (`Entraineurs`, `EspecesMonstre`, `IndividusMonstre`, `Zone`…).
-2. **Insertion de données de base** :
-    - Entraîneurs (Bob, Alice, Clara).
-    - Espèces (Springleaf, Flamkip, Pyrokip, Aquamy, Bugsyface, Galum…).
-    - Individus liés aux entraîneurs.
-3. **Connexion à la BDD** via une classe `BDD` (JDBC).
-    - Gestion de la connexion et des requêtes préparées.
-    - Fermeture sécurisée de la connexion.
-4. **Tests unitaires de connexion** pour valider la communication Kotlin ↔ SQL.
-5. **Création des DAO** (ex. `EntraineurDAO`) avec méthodes :
-    - `findAll()`
-    - `findById()`
-    - `findByNom()`
-    - `save()`
-    - `saveAll()`
-    - `deleteById()`
-6. **Intégration dans le projet** :
-    - Connexion automatique à la BDD au lancement.
-    - Récupération des données via DAO dans `Main.kt`.
-7. **Extension du modèle** : création de `EspeceMonstreDAO` et `IndividuMonstreDAO`.
-8. **Création personnelle d’une nouvelle espèce de monstre** avec ASCII art et éléments associés.
+### ⚙️ Étapes de réalisation
+
+#### 1️⃣ Modèle des éléments
+- Création de la classe `Element` avec gestion des forces, faiblesses et immunités.
+- Méthode `efficaciteContre()` pour calculer l’efficacité entre deux éléments.
+- Définition des éléments de base : Feu, Eau, Plante, Insecte, Roche, Normal.
+
+#### 2️⃣ Modèle des techniques
+- Création de la classe `Technique` (id, nom, précision, multiplicateur, effets, élément associé).
+- Implémentation des méthodes :
+  - `calculPrecision()`
+  - `calculBonusStab()` (bonus de même type)
+  - `effet()` (dégâts, buffs, debuffs, soins…)
+
+#### 3️⃣ Progression des monstres
+- Ajout de la classe `PalierTechnique` pour les apprentissages automatiques.
+- Extension d’`IndividuMonstre` avec gestion de la liste de techniques et apprentissage (`apprendreTechnique()`).
+
+#### 4️⃣ Objets liés au gameplay
+- Création de `CapsuleTechnique` héritant de `Item` et implémentant `Utilisable` pour enseigner une technique.
+
+---
+
+### 🧩 Développement des classes principales
+- `Element` -> relations d’efficacité et API simple pour les calculs.
+- `Technique` -> encapsulation des paramètres d’attaque et d’effets.
+- `PalierTechnique` -> mapping niveau -> technique acquise.
+- `IndividuMonstre` -> intégration des techniques, prise en compte du STAB et de l’élément.
+- `CapsuleTechnique` -> logique d’enseignement conditionnel (compatibilité, doublons…).
+
+---
+
+### ⚗️ Tests unitaires
+- Mise en place de tests JUnit5 pour vérifier :
+  - l’efficacité élémentaire (`efficaciteContre()`),
+  - le bonus STAB (`calculBonusStab()`),
+  - la précision et l’application des effets (`calculPrecision()`, `effet()`),
+  - l’apprentissage automatique via `PalierTechnique` et manuel via `CapsuleTechnique`.
+
+---
+
+### 🚧 Difficultés rencontrées
+- Déterminer une table d’efficacité cohérente et la rendre extensible.
+- Gérer les arrondis et priorités entre précision, STAB et multiplicateurs.
+- Éviter les effets cumulés indésirables (buff/debuff en boucle).
+
+---
+
+### 📚 Compétences acquises
+- Modélisation d’un système d’éléments et d’attaques.
+- Écriture de tests unitaires ciblés sur des règles métier.
+- Conception d’API orientées domaine (combat, progression).
+
+---
+
+### ✅ Bilan du Sprint 2
+Les mécaniques de combat sont opérationnelles avec un système d’éléments robuste et des techniques testées. Les monstres progressent par paliers et peuvent apprendre de nouvelles attaques via des capsules.
+
+---
+
+## 🎮 Sprint 3 : Base de données & DAO
+
+---
+
+### 🎯 Objectif du sprint
+Connecter le projet à une base relationnelle (MySQL/MariaDB) et structurer l’accès aux données via des DAO.
+
+---
+
+### ⚙️ Étapes de réalisation
+
+#### 1️⃣ Schéma et données
+- Conception de la BDD et création des tables : `Entraineurs`, `EspecesMonstre`, `IndividusMonstre`, `Zone`, etc.
+- Insertion de données initiales (entraîneurs, espèces, individus…).
+
+#### 2️⃣ Accès à la base
+- Classe `BDD` (JDBC) pour gérer la connexion, les requêtes préparées et la fermeture sécurisée.
+- Tests unitaires de connexion pour valider la communication Kotlin ↔ SQL.
+
+#### 3️⃣ Couche DAO
+- `EntraineurDAO` avec : `findAll()`, `findById()`, `findByNom()`, `save()`, `saveAll()`, `deleteById()`.
+- Extension avec `EspeceMonstreDAO` et `IndividuMonstreDAO`.
+
+#### 4️⃣ Intégration applicative
+- Connexion automatique au lancement de l’app.
+- Récupération et hydratation des modèles dans `Main.kt` via les DAO.
+- Synchronisation basique des modifications (save/update/delete).
+
+#### 5️⃣ Contenu additionnel
+- Création d’une nouvelle espèce personnelle avec ASCII art et éléments associés.
+
+---
+
+### 🧩 Développement des classes principales
+- `BDD` -> gestion centralisée des connexions JDBC.
+- DAO par entité (`EntraineurDAO`, `EspeceMonstreDAO`, `IndividuMonstreDAO`).
+- Adaptations mineures des modèles pour l’hydratation depuis la BDD.
+
+---
+
+### ⚗️ Tests unitaires
+- Vérification de la connexion et des opérations CRUD de chaque DAO.
+- Jeux de données de test pour garantir l’isolation des cas.
+
+---
+
+### 🚧 Difficultés rencontrées
+- Gestion des ressources JDBC (fuites de connexions, fermetures tardives).
+- Mapping objet-relationnel sans ORM, en gardant le code lisible.
+- Cohérence référentielle lors des insertions multiples (ordre, clés étrangères).
+
+---
+
+### 📚 Compétences acquises
+- Manipulation de JDBC et requêtes préparées.
+- Conception d’une couche DAO propre et testable.
+- Intégration d’une BDD dans une application Kotlin existante.
+
+---
+
+### ✅ Bilan du Sprint 3
+L’application charge et persiste les données via une BDD relationnelle. Les DAO encapsulent proprement les accès, et l’intégration dans le flux de jeu est opérationnelle.
 
 ---
 
 ## 🧠 Résumé général
 
-| Sprint | Thème | Objectif principal | Résultat attendu |
-|:--|:--|:--|:--|
+| Sprint       | Thème | Objectif principal | Résultat attendu |
+|:-------------|:--|:--|:--|
+| **Sprint 1** | Création du noyau du projet | Mettre en place les bases du jeu et les classes principales | Le noyau du jeu est fonctionnel : les classes (dresseur, monstre, zone, item, combat…) sont créées et interconnectées |
 | **Sprint 2** | Éléments & Techniques | Ajouter les mécaniques de combat et progression des monstres | Monstres capables d’utiliser des attaques élémentaires avec calculs de dégâts et progression |
 | **Sprint 3** | Base de Données & DAO | Connecter le jeu à une base MySQL pour gérer les données de façon persistante | Les entraîneurs, espèces et monstres sont chargés dynamiquement depuis la BDD |
 
 ---
 
-**Auteur :** _[Ton nom ici]_  
+**Auteur :** _GOMES SILVA Victor_  
 **Date :** _13/10/2025_  
