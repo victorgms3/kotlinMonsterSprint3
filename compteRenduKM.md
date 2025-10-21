@@ -255,16 +255,74 @@ Connecter le projet à une base relationnelle (MySQL/MariaDB) et structurer l’
 
 ---
 
-### ⚗️ Tests unitaires
-- Vérification de la connexion et des opérations CRUD de chaque DAO.
-- Jeux de données de test pour garantir l’isolation des cas.
+### Prompt chatgpt pour securiser la connexion à la base de donnée en utilisant le token
 
----
+#### - contexte :
 
+#### Dans la class [BDD.kt](src/main/kotlin/jdbc/BDD.kt), l'id de connexion ainsi que le mdp etaient affiché en clair ce qui pose une faille de securité car n'importe qui pourrait les voir.
+
+**Ma class avant :**
+```kotlin
+    class BDD( 
+        var url: String = "jdbc:mysql://172.16.0.210:3306/db_monsters_vgomessilv", 
+        var user: String = "**********", 
+        var password: String = "********", )
+```
+-**Mon prompt chatgpt** :
+Salut, Agis en tant qu'expert en cyberSecurité et développer Kotlin. j'ai un projet KotlinMonster qui est un RPG/monster-collector.
+J'ai une problématique, j'ai mon identifiant ainsi que mon mot de passe qui est affiché en clair dans ma class BDD, je voudrais les cacher pour que je puisse mettre mon repository en public sur github sans que tout le monde puisse avoir acces a mes id, je pourrais les mettre dans un fichier qui serais dans le gitignore par exemple. Peut-tu m'indiquer comment je peux faire ?
+
+**Ma class après :**
+```kotlin 
+class BDD(
+    var url: String = "",
+    var user: String = "",
+    var password: String = "",
+)
+```
+
+##### l'IA ma indiqué de créer un nouveau fichier [config.properties](config.properties) puis d'y mettre ça :
+
+``` properties
+db.url=jdbc:mysql://172.16.0.210:3306/db_monsters_vgomessilv
+db.user=MonUser
+db.password=MyPassword
+```
+##### Modification de la class BDD :
+```kotlin
+class BDD(
+    var url: String = "",
+    var user: String = "",
+    var password: String = "",
+) {
+    init {
+        // Chargement des paramètres depuis le fichier config.properties si url, user, password sont vides
+        if (url.isEmpty() || user.isEmpty() || password.isEmpty()) {
+            val props = java.util.Properties()
+            try {
+                FileInputStream("config.properties").use { fis ->
+                    props.load(fis)
+                }
+                url = props.getProperty("db.url", "")
+                user = props.getProperty("db.user", "")
+                password = props.getProperty("db.password", "")
+            } catch (e: Exception) {
+                println("Erreur lors du chargement du fichier de configuration : ${e.message}")
+            }
+        }
+    }
+```
 ### 🚧 Difficultés rencontrées
 - Gestion des ressources JDBC (fuites de connexions, fermetures tardives).
 - Mapping objet-relationnel sans ORM, en gardant le code lisible.
 - Cohérence référentielle lors des insertions multiples (ordre, clés étrangères).
+- Au niveau de la securité des mots de passe windows visible en clair
+
+---
+
+### ⚗️ Tests unitaires
+- Vérification de la connexion et des opérations CRUD de chaque DAO.
+- Jeux de données de test pour garantir l’isolation des cas.
 
 ---
 
@@ -272,6 +330,7 @@ Connecter le projet à une base relationnelle (MySQL/MariaDB) et structurer l’
 - Manipulation de JDBC et requêtes préparées.
 - Conception d’une couche DAO propre et testable.
 - Intégration d’une BDD dans une application Kotlin existante.
+- manipulation du fichier gitignore 
 
 ---
 
@@ -279,7 +338,6 @@ Connecter le projet à une base relationnelle (MySQL/MariaDB) et structurer l’
 L’application charge et persiste les données via une BDD relationnelle. Les DAO encapsulent proprement les accès, et l’intégration dans le flux de jeu est opérationnelle.
 
 ---
-
 ## 🧠 Résumé général
 
 | Sprint       | Thème | Objectif principal | Résultat attendu |
