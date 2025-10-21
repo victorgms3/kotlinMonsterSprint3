@@ -1,5 +1,6 @@
 # 🧾 Compte Rendu — Kotlin Monsters
-## 🎮 Sprint 1 : Création du noyau du projet
+<details>
+<summary><h2>🎮 Sprint 1 — Création du noyau du projet</h2></summary>
 
 ---
 
@@ -145,6 +146,7 @@ Le noyau du jeu est **entièrement fonctionnel** :
 - Le jeu peut se lancer avec une partie complète, des combats et des interactions de base.
 - Les fondations sont prêtes pour les Sprints 2 et 3 (éléments, techniques, DAO, base de données).
 ---
+</details>
 
 ## 🎮 Sprint 2 : Éléments et Techniques
 
