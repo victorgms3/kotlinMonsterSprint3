@@ -148,7 +148,8 @@ Le noyau du jeu est **entièrement fonctionnel** :
 ---
 </details>
 
-## 🎮 Sprint 2 : Éléments et Techniques
+<details>
+<summary><h2>🎮 Sprint 2 : Éléments et Techniques</h2></summary>
 
 ---
 
@@ -216,8 +217,10 @@ Implémenter les mécaniques essentielles du combat et de la progression : élé
 Les mécaniques de combat sont opérationnelles avec un système d’éléments robuste et des techniques testées. Les monstres progressent par paliers et peuvent apprendre de nouvelles attaques via des capsules.
 
 ---
+</details>
 
-## 🎮 Sprint 3 : Base de données & DAO
+<details>
+<summary><h2> 🎮 Sprint 3 : Base de données & DAO </h2></summary>
 
 ---
 
@@ -340,6 +343,8 @@ class BDD(
 L’application charge et persiste les données via une BDD relationnelle. Les DAO encapsulent proprement les accès, et l’intégration dans le flux de jeu est opérationnelle.
 
 ---
+</details>
+
 ## 🧠 Résumé général
 
 | Sprint       | Thème | Objectif principal | Résultat attendu |
